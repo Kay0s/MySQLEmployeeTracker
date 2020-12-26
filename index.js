@@ -136,12 +136,13 @@ function addEmployee() {
                   function (err, res) {
                     if (err) throw err;
                     console.log(err);
-                  },
+                  }),
+                  )
                    console.table(res);
                     runEmployeeView();
                  
-              )};
-                }));
+              });
+                };
                
             };
 
