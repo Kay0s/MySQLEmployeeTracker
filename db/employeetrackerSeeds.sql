@@ -1,32 +1,5 @@
-DROP DATABASE IF EXISTS employeetrackerDB;
-
-CREATE DATABASE employeetrackerDB;
 
 USE employeetrackerDB;
-
-
-CREATE TABLE employee (
-  id INT NOT NULL AUTO_INCREMENT,
- first_name varchar(30) NOT NULL,
- last_name varchar(30) NOT NULL,
-  dpt_id INT NULL,
-  PRIMARY KEY (id)
-);
-
-CREATE TABLE department (
-   dpt_id INT NOT NULL AUTO_INCREMENT,
-   dpt_name varchar(30),
-  PRIMARY KEY (id)
-);
-
-CREATE TABLE role (
-  id INT NOT NULL AUTO_INCREMENT,
-  title VARCHAR(45) NOT NULL,
-  salary DECIMAL(10,2) NOT NULL,
-  dpt_id INT NOT NULL,
-  PRIMARY KEY (id)
-);
-
 
 
 insert INTO employee (first_name, last_name, role_id)
