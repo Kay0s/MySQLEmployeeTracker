@@ -1,12 +1,8 @@
+const {connection} = require("./db/connection");
 const inquirer = require("inquirer");
 const ctable = require("console.table");
 const mysql = require("mysql");
 const ascii = require("ascii-logo");
-
-
-const logoText = logo ({name: "Employee Manger"}).render ();
-
-console.logo(logoText);
 
 
 
@@ -143,39 +139,5 @@ function addEmployee() {
                  
               });
                 };
-               
-            };
-
-//   //ask initial with inquirer.
-//   // in the then of the inquirer
-
-//   //inquirer is going to ask questions. such as do you want to create or read or exit?
-
-//   inquirer.prompt(qs).then((answer) => {
-//     if (answer.read) readQuestion();
-//     if (answer.write) writeQuestion();
-//     if (answer.exit) stopProgram();
-//   });
-// }
-
-// function readQuestion() {
-//   inquirer.prompt([
-//     {question: "do you want see the departmnets, roles or employees"}),
-//   ]).then(answer){
-//     if (answer.departments) readDepartmnets();
-//     if (answer.roles) readroles();
-//     if (answer.employees) reademployees();
-//   }
-// }
-
-// function readDepartmnets(){
-//     const query = connection.query(
-//         "select * from employee",
-//         function (err, res) {
-//           if (err) throw err;
-//           console.log(res.affectedRows + " product inserted!\n");
-//           // Call updateProduct AFTER the INSERT completes
-//         }
-//       );
-//       initialQs()
-// }
+              }
+            }};
