@@ -11,46 +11,46 @@ function runEmployeeView() {
       type: "list",
       message: "What would you like to do?",
       choices: [
-        "View all employees",
-        "View All Employees By Department",
-
+        "View All Employees",
+        "View All Employees by Department",
         "View All Employees by Manager",
-
         "Add Employee",
-
         "Update Employee Role",
-
         "Remove Employee",
-
-        "Update Employee Role",
-
         "Update Employee Manager",
-
-        "View All Role",
-
+        "View All Roles",
         "Add Role",
-
         "Remove Role",
-
         "View All Departments",
-
         "Quit",
       ],
     })
     .then((res) => {
       let choice = res.action;
       switch (choice) {
-        case "View all employees":
-          employeeSearch();
+        case "View All Employees":
+          employeeView();
           break;
-        case "View all departments":
-          departmentSearch();
+        case "View All Employees by Department":
+          employeeByDeptView();
           break;
-        case "View all roles":
-          roleSearch();
+        case "View All Employees by Manager":
+          employeeByManagerView();
           break;
         case "Add Employee":
           addEmployee();
+          break;
+        case "Update Employee Role":
+          updateEmployeeRole();
+          break;
+        case "Remove Employee":
+          removeEmployee();
+          break;
+        case "View All Departments":
+          departmentView();
+          break;
+        case "View All Roles":
+          roleView();
           break;
         case "Add Department":
           departmentRole();
@@ -61,38 +61,36 @@ function runEmployeeView() {
         case "Quit":
           connection.end();
           break;
-        default:
-          console.log("Your choice does not match any options");
-          runEmployeeView();
-          break;
       }
     });
   // function which prompts the user for what action they should take
-  function employeeSearch() {
+  function employeeView() {
     let query = "SELECT * FROM employee";
     connection.query(query, function (err, res) {
       if (err) throw err;
-      for (let i = 0; i, res.length; i++) {
+      {
         console.table(res);
       }
       runEmployeeView();
     });
   }
-  function departmentSearch() {
+
+  function departmentView() {
     let query = "SELECT * FROM department";
     connection.query(query, function (err, res) {
       if (err) throw err;
-      for (let i = 0; i, res.lenght; i++) {
+      {
         console.table(res);
       }
       runEmployeeView();
     });
   }
-  function departmentRole() {
+
+  function roleView() {
     let query = "SELECT * FROM role";
     connection.query(query, function (err, res) {
       if (err) throw err;
-      for (let i = 0; i, res.lenght; i++) {
+      {
         console.table(res);
       }
       runEmployeeView();
@@ -105,7 +103,7 @@ function runEmployeeView() {
         {
           name: "employeeFirst",
           type: "input",
-          message: "What is you employee's first name?",
+          message: "What is your employee's first name?",
         },
 
         {
@@ -117,17 +115,7 @@ function runEmployeeView() {
         {
           name: "employeRole",
           type: "list",
-          message: "What is the employee's role?",
-          choices: [
-            "Salesperson",
-            "Lead Engineer",
-            "Software Engineer",
-            "Account Manager",
-            "Accountant",
-            "legal Team Lead",
-            "Lawyer",
-            "Intern",
-          ],
+          message: "What is the employee's role id?",
         },
       ])
 
