@@ -208,14 +208,21 @@ function runEmployeeView() {
             manager_id: answer.managerId,
             role_id: answer.employeeRoleId,
           },
-          function (err, res) {
-            if (err) throw err;
-            console.log(err);
-            console.table(res);
+          function (err) {
+            if (err) {
+              throw err;
+            } else {
+              let query = "SELECT * FROM employee";
+              connection.query(query, function (err, res) {
+                if (err) throw err;
+                {
+                  console.table(res);
+                }
+                runEmployeeView();
+              });
+            }
           }
         );
-
-        runEmployeeView();
       });
   }
 
