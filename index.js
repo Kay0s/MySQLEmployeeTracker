@@ -155,14 +155,21 @@ function runEmployeeView() {
             salary: answer.roleSalary,
             department_id: answer.departmentId,
           },
-          function (err, res) {
-            if (err) throw err;
-            console.log(err);
-            console.table(res);
+          function (err) {
+            if (err) {
+              throw err;
+            } else {
+              let query = "SELECT * FROM role";
+              connection.query(query, function (err, res) {
+                if (err) throw err;
+                {
+                  console.table(res);
+                }
+                runEmployeeView();
+              });
+            }
           }
         );
-
-        runEmployeeView();
       });
   }
 
