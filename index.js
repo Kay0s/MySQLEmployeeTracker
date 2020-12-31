@@ -12,7 +12,6 @@ function runEmployeeView() {
       message: "What would you like to do?",
       choices: [
         "View All Employees",
-        "View All Employees by Department",
         "View All Employees by Manager",
         "Add Employee",
         "Update Employee Role",
@@ -21,6 +20,7 @@ function runEmployeeView() {
         "View All Roles",
         "Add Role",
         "Remove Role",
+        "Add Department",
         "View All Departments",
         "Quit",
       ],
@@ -30,9 +30,6 @@ function runEmployeeView() {
       switch (choice) {
         case "View All Employees":
           employeeView();
-          break;
-        case "View All Employees by Department":
-          employeeByDeptView();
           break;
         case "View All Employees by Manager":
           employeeByManagerView();
@@ -53,10 +50,10 @@ function runEmployeeView() {
           roleView();
           break;
         case "Add Department":
-          departmentRole();
+          addDepartment();
           break;
         case "Add Role":
-          add();
+          addRole();
           break;
         case "Quit":
           connection.end();
@@ -95,6 +92,78 @@ function runEmployeeView() {
       }
       runEmployeeView();
     });
+  }
+
+  function addDepartment() {
+    inquirer
+      .prompt([
+        {
+          name: "departmentName",
+          type: "input",
+          message: "What is the department name?",
+        },
+      ])
+      .then((answer) => {
+        connection.query(
+          "INSERT INTO department SET ?",
+          {
+            name: answer.departmentName,
+          },
+          function (err) {
+            if (err) {
+              throw err;
+            } else {
+              let query = "SELECT * FROM department";
+              connection.query(query, function (err, res) {
+                if (err) throw err;
+                {
+                  console.table(res);
+                }
+                runEmployeeView();
+              });
+            }
+          }
+        );
+      });
+  }
+
+  function addRole() {
+    inquirer
+      .prompt([
+        {
+          name: "roleTitle",
+          type: "input",
+          message: "What is the role title",
+        },
+
+        {
+          name: "roleSalary",
+          type: "input",
+          message: "What is the role's salary",
+        },
+        {
+          name: "departmentId",
+          type: "input",
+          message: "What is the employee's manager's id?",
+        },
+      ])
+      .then(function (answer) {
+        connection.query(
+          "INSERT INTO role SET ?",
+          {
+            title: answer.roleTitle,
+            salary: answer.roleSalary,
+            department_id: answer.departmentId,
+          },
+          function (err, res) {
+            if (err) throw err;
+            console.log(err);
+            console.table(res);
+          }
+        );
+
+        runEmployeeView();
+      });
   }
 
   function addEmployee() {
@@ -141,6 +210,44 @@ function runEmployeeView() {
 
         runEmployeeView();
       });
+  }
+
+  function updateEmployeeRole() {
+    connection.query(`SELECT * from employee`, (err, res) => {
+      if (err) throw err;
+      console.table(res);
+    });
+    setTimeout(() => {
+      inquirer
+        .prompt([
+          {
+            name: "employeeID",
+            type: "input",
+            message: "What is the employee's id?",
+          },
+
+          {
+            name: "updateEmployeeRole",
+            type: "input",
+            message: "What is the employee's new role id?",
+          },
+        ])
+        .then(function (answer) {
+          connection.query(
+            "UPDATE INTO role SET ?",
+            {
+              title: answer.updateEmployeeRole,
+            },
+            function (err, res) {
+              if (err) throw err;
+              console.log(err);
+              console.table(res);
+            }
+          );
+
+          runEmployeeView();
+        });
+    }, 1000);
   }
 }
 runEmployeeView();
