@@ -107,39 +107,38 @@ function runEmployeeView() {
         },
 
         {
-          name: "employeeSecond",
+          name: "employeeLast",
           type: "input",
           message: "What is your employee's last name?",
         },
+        {
+          name: "managerId",
+          type: "input",
+          message: "What is the employee's manager's id?",
+        },
 
         {
-          name: "employeRole",
-          type: "list",
+          name: "employeeRoleId",
+          type: "input",
           message: "What is the employee's role id?",
         },
       ])
-
       .then(function (answer) {
-        console.log(answer);
         connection.query(
           "INSERT INTO employee SET ?",
           {
-            employeeFirst: answer.employeeFirst,
-            employeeLast: answer.employeeLast,
+            first_name: answer.employeeFirst,
+            last_name: answer.employeeLast,
+            manager_id: answer.managerId,
+            role_id: answer.employeeRoleId,
           },
-          connection.query(
-            "INSERT INTO employee_role SET ?",
-            {
-              employeeRole: answer.employeeRole,
-            },
-
-            function (err, res) {
-              if (err) throw err;
-              console.log(err);
-            }
-          )
+          function (err, res) {
+            if (err) throw err;
+            console.log(err);
+            console.table(res);
+          }
         );
-        console.table(res);
+
         runEmployeeView();
       });
   }
