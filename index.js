@@ -227,10 +227,16 @@ function runEmployeeView() {
   }
 
   function updateEmployeeRole() {
-    connection.query(`SELECT * from employee`, (err, res) => {
-      if (err) throw err;
-      console.table(res);
-    });
+    connection.query(
+      `SELECT r.id AS 'Role Id', title AS Title, CONCAT(first_name," ",last_name) AS Name, e.id AS 'Id #'
+      FROM role r
+      LEFT JOIN employee e
+      ON e.role_id = r.id;`,
+      (err, res) => {
+        if (err) throw err;
+        console.table(res);
+      }
+    );
     setTimeout(() => {
       inquirer
         .prompt([
@@ -246,22 +252,31 @@ function runEmployeeView() {
             message: "What is the employee's new role id?",
           },
         ])
-        .then(function (answer) {
+        .then((answer) => {
           connection.query(
-            "UPDATE INTO role SET ?",
-            {
-              title: answer.updateEmployeeRole,
-            },
-            function (err, res) {
-              if (err) throw err;
-              console.log(err);
-              console.table(res);
+            `UPDATE employee SET role_id  = ${answer.updateEmployeeRole}
+           WHERE id = ${answer.employeeID};`,
+            (err) => {
+              if (err) {
+                throw err;
+              } else {
+                connection.query(
+                  `SELECT r.id AS 'Role Id', title AS Title, CONCAT(first_name," ",last_name) AS Name, e.id AS 'Id #'
+                  FROM role r
+                  LEFT JOIN employee e
+                  ON e.role_id = r.id;`,
+                  (err, res) => {
+                    if (err) throw err;
+                    console.table(res);
+                    runEmployeeView();
+                  }
+                );
+              }
             }
           );
-
-          runEmployeeView();
         });
     }, 1000);
   }
 }
+
 runEmployeeView();
