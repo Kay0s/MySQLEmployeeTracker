@@ -28,11 +28,11 @@ function runEmployeeView() {
       type: "list",
       message: "What would you like to do?",
       choices: [
-        "View All Employees",
         "View All Departments",
+        "View All Roles",
+        "View All Employees",
         "Add Employee",
         "Update Employee Role",
-        "View All Roles",
         "Add Role",
         "Add Department",
         "Quit",
@@ -41,23 +41,23 @@ function runEmployeeView() {
     .then((res) => {
       let choice = res.action;
       switch (choice) {
-        case "View All Employees":
-          employeeView();
-          break;
         case "View All Departments":
-          departmentView();
+          departmentsView();
           break;
         case "View All Roles":
-          roleView();
+          rolesView();
+          break;
+        case "View All Employees":
+          employeesView();
           break;
         case "Add Department":
           addDepartment();
           break;
-        case "Add Employee":
-          addEmployee();
-          break;
         case "Add Role":
           addRole();
+          break;
+        case "Add Employee":
+          addEmployee();
           break;
         case "Update Employee Role":
           updateEmployeeRole();
@@ -68,20 +68,7 @@ function runEmployeeView() {
       }
     });
   // function which prompts the user for what action they should take
-  function employeeView() {
-    setTimeout(() => {
-      let query = "SELECT * FROM employee";
-      connection.query(query, function (err, res) {
-        if (err) throw err;
-        {
-          console.table(res);
-        }
-        runEmployeeView();
-      });
-    }, 1000);
-  }
-
-  function departmentView() {
+  function departmentsView() {
     setTimeout(() => {
       let query = "SELECT * FROM department";
       connection.query(query, function (err, res) {
@@ -94,9 +81,22 @@ function runEmployeeView() {
     }, 1000);
   }
 
-  function roleView() {
+  function rolesView() {
     setTimeout(() => {
       let query = "SELECT * FROM role";
+      connection.query(query, function (err, res) {
+        if (err) throw err;
+        {
+          console.table(res);
+        }
+        runEmployeeView();
+      });
+    }, 1000);
+  }
+
+  function employeesView() {
+    setTimeout(() => {
+      let query = "SELECT * FROM employee";
       connection.query(query, function (err, res) {
         if (err) throw err;
         {
