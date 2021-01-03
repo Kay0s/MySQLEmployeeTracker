@@ -2,9 +2,28 @@ const { connection } = require("./db/connection");
 const inquirer = require("inquirer");
 const ctable = require("console.table");
 const mysql = require("mysql");
-// const ascii = require("ascii-logo");
+const logo = require("asciiart-logo");
+const config = require("./package.json");
 
 function runEmployeeView() {
+  console.log(
+    logo({
+      name: "Employee Tracker",
+      font: "Standard",
+      lineChars: 10,
+      padding: 2,
+      margin: 3,
+      borderColor: "grey",
+      logoColor: "bold-green",
+      textColor: "green",
+    })
+      .emptyLine()
+      .right(
+        "Employee Tracking Application to view and interact with information stored in a database using node, inquirer, and MySQL."
+      )
+      .emptyLine()
+      .render()
+  );
   inquirer
     .prompt({
       name: "action",
