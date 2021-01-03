@@ -1,6 +1,6 @@
 const { connection } = require("./db/connection");
 const inquirer = require("inquirer");
-// const ctable = require("console.table");
+const ctable = require("console.table");
 const mysql = require("mysql");
 // const ascii = require("ascii-logo");
 
