@@ -1,9 +1,7 @@
 const { connection } = require("./db/connection");
 const inquirer = require("inquirer");
 const ctable = require("console.table");
-const mysql = require("mysql");
 const logo = require("asciiart-logo");
-const config = require("./package.json");
 
 function runEmployeeView() {
   console.log(
@@ -71,36 +69,42 @@ function runEmployeeView() {
     });
   // function which prompts the user for what action they should take
   function employeeView() {
-    let query = "SELECT * FROM employee";
-    connection.query(query, function (err, res) {
-      if (err) throw err;
-      {
-        console.table(res);
-      }
-      runEmployeeView();
-    });
+    setTimeout(() => {
+      let query = "SELECT * FROM employee";
+      connection.query(query, function (err, res) {
+        if (err) throw err;
+        {
+          console.table(res);
+        }
+        runEmployeeView();
+      });
+    }, 1000);
   }
 
   function departmentView() {
-    let query = "SELECT * FROM department";
-    connection.query(query, function (err, res) {
-      if (err) throw err;
-      {
-        console.table(res);
-      }
-      runEmployeeView();
-    });
+    setTimeout(() => {
+      let query = "SELECT * FROM department";
+      connection.query(query, function (err, res) {
+        if (err) throw err;
+        {
+          console.table(res);
+        }
+        runEmployeeView();
+      });
+    }, 1000);
   }
 
   function roleView() {
-    let query = "SELECT * FROM role";
-    connection.query(query, function (err, res) {
-      if (err) throw err;
-      {
-        console.table(res);
-      }
-      runEmployeeView();
-    });
+    setTimeout(() => {
+      let query = "SELECT * FROM role";
+      connection.query(query, function (err, res) {
+        if (err) throw err;
+        {
+          console.table(res);
+        }
+        runEmployeeView();
+      });
+    }, 1000);
   }
 
   function addDepartment() {
