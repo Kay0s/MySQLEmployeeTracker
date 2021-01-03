@@ -137,49 +137,56 @@ function runEmployeeView() {
   }
 
   function addRole() {
-    inquirer
-      .prompt([
-        {
-          name: "roleTitle",
-          type: "input",
-          message: "What is the role title",
-        },
-
-        {
-          name: "roleSalary",
-          type: "input",
-          message: "What is the role's salary",
-        },
-        {
-          name: "departmentId",
-          type: "input",
-          message: "What is the employee's manager's id?",
-        },
-      ])
-      .then(function (answer) {
-        connection.query(
-          "INSERT INTO role SET ?",
+    connection.query(`SELECT * FROM role`, (err, res) => {
+      if (err) throw err;
+      console.table(res);
+    });
+    setTimeout(() => {
+      inquirer;
+      inquirer
+        .prompt([
           {
-            title: answer.roleTitle,
-            salary: answer.roleSalary,
-            department_id: answer.departmentId,
+            name: "roleTitle",
+            type: "input",
+            message: "What is the role title",
           },
-          function (err) {
-            if (err) {
-              throw err;
-            } else {
-              let query = "SELECT * FROM role";
-              connection.query(query, function (err, res) {
-                if (err) throw err;
-                {
-                  console.table(res);
-                }
-                runEmployeeView();
-              });
+
+          {
+            name: "roleSalary",
+            type: "input",
+            message: "What is the role's salary",
+          },
+          {
+            name: "departmentId",
+            type: "input",
+            message: "What is the role's department id?",
+          },
+        ])
+        .then(function (answer) {
+          connection.query(
+            "INSERT INTO role SET ?",
+            {
+              title: answer.roleTitle,
+              salary: answer.roleSalary,
+              department_id: answer.departmentId,
+            },
+            function (err) {
+              if (err) {
+                throw err;
+              } else {
+                let query = `SELECT * FROM role`;
+                connection.query(query, function (err, res) {
+                  if (err) throw err;
+                  {
+                    console.table(res);
+                  }
+                  runEmployeeView();
+                });
+              }
             }
-          }
-        );
-      });
+          );
+        });
+    }, 1000);
   }
 
   function addEmployee() {
