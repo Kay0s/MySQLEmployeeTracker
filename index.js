@@ -183,56 +183,71 @@ function runEmployeeView() {
   }
 
   function addEmployee() {
-    inquirer
-      .prompt([
-        {
-          name: "employeeFirst",
-          type: "input",
-          message: "What is your employee's first name?",
-        },
-
-        {
-          name: "employeeLast",
-          type: "input",
-          message: "What is your employee's last name?",
-        },
-        {
-          name: "managerId",
-          type: "input",
-          message: "What is the employee's manager's id?",
-        },
-
-        {
-          name: "employeeRoleId",
-          type: "input",
-          message: "What is the employee's role id?",
-        },
-      ])
-      .then(function (answer) {
-        connection.query(
-          "INSERT INTO employee SET ?",
+    connection.query(
+      `SELECT r.id AS 'Role Id', title AS Title, CONCAT(first_name," ",last_name) AS Name, e.id AS 'Id #'
+      FROM role r
+      LEFT JOIN employee e
+      ON e.role_id = r.id;`,
+      (err, res) => {
+        if (err) throw err;
+        console.table(res);
+      }
+    );
+    setTimeout(() => {
+      inquirer
+        .prompt([
           {
-            first_name: answer.employeeFirst,
-            last_name: answer.employeeLast,
-            manager_id: answer.managerId,
-            role_id: answer.employeeRoleId,
+            name: "employeeFirst",
+            type: "input",
+            message: "What is your employee's first name?",
           },
-          function (err) {
-            if (err) {
-              throw err;
-            } else {
-              let query = "SELECT * FROM employee";
-              connection.query(query, function (err, res) {
-                if (err) throw err;
-                {
-                  console.table(res);
-                }
-                runEmployeeView();
-              });
+
+          {
+            name: "employeeLast",
+            type: "input",
+            message: "What is your employee's last name?",
+          },
+          {
+            name: "managerId",
+            type: "input",
+            message: "What is the employee's manager's id?",
+          },
+
+          {
+            name: "employeeRoleId",
+            type: "input",
+            message: "What is the employee's role id?",
+          },
+        ])
+        .then(function (answer) {
+          connection.query(
+            "INSERT INTO employee SET ?",
+            {
+              first_name: answer.employeeFirst,
+              last_name: answer.employeeLast,
+              manager_id: answer.managerId,
+              role_id: answer.employeeRoleId,
+            },
+            function (err) {
+              if (err) {
+                throw err;
+              } else {
+                let query = `SELECT r.id AS 'Role Id', title AS Title, CONCAT(first_name," ",last_name) AS Name, e.id AS 'Id #'
+                FROM role r
+                LEFT JOIN employee e
+                ON e.role_id = r.id;`;
+                connection.query(query, function (err, res) {
+                  if (err) throw err;
+                  {
+                    console.table(res);
+                  }
+                  runEmployeeView();
+                });
+              }
             }
-          }
-        );
-      });
+          );
+        });
+    }, 1000);
   }
 
   function updateEmployeeRole() {
