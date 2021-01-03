@@ -12,16 +12,12 @@ function runEmployeeView() {
       message: "What would you like to do?",
       choices: [
         "View All Employees",
-        "View All Employees by Manager",
+        "View All Departments",
         "Add Employee",
         "Update Employee Role",
-        "Remove Employee",
-        "Update Employee Manager",
         "View All Roles",
         "Add Role",
-        "Remove Role",
         "Add Department",
-        "View All Departments",
         "Quit",
       ],
     })
@@ -30,18 +26,6 @@ function runEmployeeView() {
       switch (choice) {
         case "View All Employees":
           employeeView();
-          break;
-        case "View All Employees by Manager":
-          employeeByManagerView();
-          break;
-        case "Add Employee":
-          addEmployee();
-          break;
-        case "Update Employee Role":
-          updateEmployeeRole();
-          break;
-        case "Remove Employee":
-          removeEmployee();
           break;
         case "View All Departments":
           departmentView();
@@ -52,8 +36,14 @@ function runEmployeeView() {
         case "Add Department":
           addDepartment();
           break;
+        case "Add Employee":
+          addEmployee();
+          break;
         case "Add Role":
           addRole();
+          break;
+        case "Update Employee Role":
+          updateEmployeeRole();
           break;
         case "Quit":
           connection.end();
