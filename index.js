@@ -104,36 +104,41 @@ function runEmployeeView() {
   }
 
   function addDepartment() {
-    inquirer
-      .prompt([
-        {
-          name: "departmentName",
-          type: "input",
-          message: "What is the department name?",
-        },
-      ])
-      .then((answer) => {
-        connection.query(
-          "INSERT INTO department SET ?",
+    connection.query(`SELECT * FROM department`, (err, res) => {
+      if (err) throw err;
+      console.table(res);
+    });
+    setTimeout(() => {
+      inquirer
+        .prompt([
           {
-            name: answer.departmentName,
+            name: "departmentName",
+            type: "input",
+            message: "What is the department name?",
           },
-          function (err) {
-            if (err) {
-              throw err;
-            } else {
-              let query = "SELECT * FROM department";
-              connection.query(query, function (err, res) {
-                if (err) throw err;
-                {
-                  console.table(res);
-                }
-                runEmployeeView();
-              });
+        ])
+        .then((answer) => {
+          connection.query(
+            "INSERT INTO department SET ?",
+            {
+              name: answer.departmentName,
+            },
+            function (err) {
+              if (err) {
+                throw err;
+              } else {
+                let query = "SELECT * FROM department";
+                connection.query(query, function (err, res) {
+                  if (err) throw err;
+                  {
+                    console.table(res);
+                  }
+                });
+              }
             }
-          }
-        );
-      });
+          );
+        });
+    }, 1000);
   }
 
   function addRole() {
@@ -215,15 +220,14 @@ function runEmployeeView() {
             message: "What is your employee's last name?",
           },
           {
-            name: "managerId",
-            type: "input",
-            message: "What is the employee's manager's id?",
-          },
-
-          {
             name: "employeeRoleId",
             type: "input",
             message: "What is the employee's role id?",
+          },
+          {
+            name: "managerId",
+            type: "input",
+            message: "What is the employee's manager's id?",
           },
         ])
         .then(function (answer) {
@@ -232,8 +236,8 @@ function runEmployeeView() {
             {
               first_name: answer.employeeFirst,
               last_name: answer.employeeLast,
-              manager_id: answer.managerId,
               role_id: answer.employeeRoleId,
+              manager_id: answer.managerId,
             },
             function (err) {
               if (err) {
