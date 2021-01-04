@@ -3,25 +3,26 @@ const inquirer = require("inquirer");
 const ctable = require("console.table");
 const logo = require("asciiart-logo");
 
+console.log(
+  logo({
+    name: "Employee Tracker",
+    font: "Standard",
+    lineChars: 10,
+    padding: 2,
+    margin: 3,
+    borderColor: "grey",
+    logoColor: "bold-green",
+    textColor: "green",
+  })
+    .emptyLine()
+    .right(
+      "Employee Tracking Application to view and interact with information stored in a database using node, inquirer, and MySQL."
+    )
+    .emptyLine()
+    .render()
+);
+
 function runEmployeeView() {
-  console.log(
-    logo({
-      name: "Employee Tracker",
-      font: "Standard",
-      lineChars: 10,
-      padding: 2,
-      margin: 3,
-      borderColor: "grey",
-      logoColor: "bold-green",
-      textColor: "green",
-    })
-      .emptyLine()
-      .right(
-        "Employee Tracking Application to view and interact with information stored in a database using node, inquirer, and MySQL."
-      )
-      .emptyLine()
-      .render()
-  );
   inquirer
     .prompt({
       name: "action",
@@ -31,10 +32,10 @@ function runEmployeeView() {
         "View All Departments",
         "View All Roles",
         "View All Employees",
+        "Add Department",
+        "Add Role",
         "Add Employee",
         "Update Employee Role",
-        "Add Role",
-        "Add Department",
         "Quit",
       ],
     })
@@ -137,6 +138,7 @@ function runEmployeeView() {
                   {
                     console.table(res);
                   }
+                  runEmployeeView();
                 });
               }
             }
@@ -146,10 +148,16 @@ function runEmployeeView() {
   }
 
   function addRole() {
-    connection.query(`SELECT * FROM role`, (err, res) => {
-      if (err) throw err;
-      console.table(res);
-    });
+    connection.query(
+      `SELECT department.id AS "Dept ID", department.name AS "Dept Name", title AS "Role Title", salary, department_id AS "Role Table Department ID"
+    FROM department
+    LEFT JOIN role r 
+    ON department.id = department_id;`,
+      (err, res) => {
+        if (err) throw err;
+        console.table(res);
+      }
+    );
     setTimeout(() => {
       inquirer;
       inquirer
@@ -213,11 +221,16 @@ function runEmployeeView() {
       inquirer
         .prompt([
           {
+            name: "isManager",
+            type: "confirm",
+            message: "Is the employee being added a manager?",
+          },
+
+          {
             name: "employeeFirst",
             type: "input",
             message: "What is your employee's first name?",
           },
-
           {
             name: "employeeLast",
             type: "input",
@@ -232,6 +245,9 @@ function runEmployeeView() {
             name: "managerId",
             type: "input",
             message: "What is the employee's manager's id?",
+            when: (answer) => {
+              return answer.isManager === false;
+            },
           },
         ])
         .then(function (answer) {
