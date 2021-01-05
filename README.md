@@ -1,136 +1,97 @@
-Unit 12 MySQL Homework: Employee Tracker Developers are often tasked with creating interfaces that make it easy for
-non-developers to view and interact with information stored in databases. Often these interfaces are known as Content
-Management Systems. In this homework assignment, your challenge is to architect and build a solution for managing a
-company's employees using node, inquirer, and MySQL.
+# Employee Tracker Using MySQL
 
-Instructions Design the following database schema containing three tables:
+![badge](https://img.shields.io/badge/License-mit-blue)
 
-department:
+## Overview
 
-id - INT PRIMARY KEY
+As a business owner, I want to be able to view and manage the deparments, role and employees in my company, so that I
+can organize and plan my business.
 
-name - VARCHAR(30) to hold department name
+## Table of Contents
 
-role:
+- [Description](#description)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Test](#test)
+- [Demo](#demo)
+- [Tools](#tools)
+- [Research](#research)
+- [Questions](#questions)
+- [License](#license)
 
-id - INT PRIMARY KEY
+## Description
 
-title - VARCHAR(30) to hold role title
+To dynamically and quickly access a database, inquirer, console.table npm, and MySQL were utilized to:
 
-salary - DECIMAL to hold role salary
+- Serve and display a working data base.
+- The user's input was gathered and used to create, retrieve, update and delete data from the database.
 
-department_id - INT to hold reference to department role belongs to
+## Installation
 
-employee:
+1. Create a .gitignore file and include node_modules and .DS store. This ensures that the node_modules directory isn't
+   tracked or uploaded to GitHub.
+2. Use the command-line, npm i to install console.table npm, inquirer - npm, asciiargt-logo - npm and mysql npm.
+3. To start the inquirer prompts to connect the the database, use the command, node index.js.
 
-id - INT PRIMARY KEY
+## Usage
 
-first_name - VARCHAR(30) to hold employee first name
+- inquirer npm and console.table npm were used to retrieve and display data to the the user from the database
+- Once the user's information regarding:
+  - employee's first and last name, role id, salary, department id, department name, manager id:
+- An employee, department and role can be saved/retrieved/updated and respective id is created/assigned.
 
-last_name - VARCHAR(30) to hold employee last name
+## Test
 
-role_id - INT to hold reference to role employee has
+Test the schema.sql by using the seed.sql in the MySQL Workbench.
 
-manager_id - INT to hold reference to another employee that manages the employee being Created. This field may be null
-if the employee has no manager
+## Demo
 
-Build a command-line application that at a minimum allows the user to:
+- \*[demo video](https://drive.google.com/file/d/1wWOHtfEHdHWPyeBJ-lxRB2ZVvsMhdnlk/view)
+- \*[GitHub Repository](https://github.com/Kay0s/MySQLEmployeeTracker)
 
-Add departments, roles, employees
+### Screenshot of the updateEmployeeRole Function
 
-View departments, roles, employees
+![Screenshot of updateEmployeeRole Function](./codeScreenshot.jpg)
 
-Update employee roles
+## Tools
 
-Bonus points if you're able to:
+- JavaScript
+- MySQL
+- console.table npm
+- .gitignore
+- Git Bash
+- node.js
+- inquirer - npm
+- asciiargt-logo - npm
 
-Update employee managers
+## Research
 
-View employees by manager
+- [Documentation - MySQL](https://dev.mysql.com/)
+- [console.table npm](https://www.npmjs.com/package/console.table)
+- [ASCII-art Logo npm](https://www.npmjs.com/package/asciiart-logo)
+- [mysql npm](https://www.npmjs.com/package/mysql)
+- [SQLBolt](https://sqlbolt.com/)
 
-Delete departments, roles, and employees
+## Questions
 
-View the total utilized budget of a department -- ie the combined salaries of all employees in that department
+- [Email](hamilton.kristina@gmail.com)
+- [GitHub Profile](https://github.com/Kay0s)
+- [GitHub Repository](https://github.com/Kay0s/MySQLEmployeeTracker)
 
-We can frame this challenge as follows: As a business owner I want to be able to view and manage the departments, roles,
-and employees in my company So that I can organize and plan my business How do you deliver this? Here are some
-guidelines:
+## License
 
-Use the MySQL NPM package to connect to your MySQL database and perform queries.
+![badge](https://img.shields.io/badge/License-mit-blue)
 
-Use InquirerJs NPM package to interact with the user via the command-line.
+© 2021 Kristina Hamilton and Trilogy Education Services, a 2U, Inc. brand. All Rights Reserved. Permission is hereby
+granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify,
+merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software
+is furnished to do so, subject to the following conditions:
 
-Use console.table to print MySQL rows to the console. There is a built-in version of console.table, but the NPM package
-formats the data a little better for our purposes.
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
+Software.
 
-You may wish to have a separate file containing functions for performing specific SQL queries you'll need to use. Could
-a constructor function or a class be helpful for organizing these?
-
-You will need to perform a variety of SQL JOINS to complete this assignment, and it's recommended you review the week's
-activities if you need a refresher on this.
-
-Hints
-
-You may wish to include a seed.sql file to pre-populate your database. This will make development of individual features
-much easier.
-
-Focus on getting the basic functionality completed before working on more advanced features.
-
-Review the week's activities for a refresher on MySQL.
-
-Check out SQL Bolt for some extra MySQL help.
-
-Minimum Requirements
-
-Functional application.
-
-GitHub repository with a unique name and a README describing the project.
-
-The command-line application should allow users to:
-
-Add departments, roles, employees
-
-View departments, roles, employees
-
-Update employee roles
-
-Bonus
-
-The command-line application should allow users to:
-
-Update employee managers
-
-View employees by manager
-
-Delete departments, roles, and employees
-
-View the total utilized budget of a department -- ie the combined salaries of all employees in that department
-
-Commit Early and Often One of the most important skills to master as a web developer is version control. Building the
-habit of committing via Git is important for two reasons:
-
-Your commit history is a signal to employers that you are actively working on projects and learning new skills.
-
-Your commit history allows you to revert your codebase in the event that you need to return to a previous state.
-
-Follow these guidelines for committing:
-
-Make single-purpose commits for related changes to ensure a clean, manageable history. If you are fixing two issues,
-make two commits.
-
-Write descriptive, meaningful commit messages so that you and anyone else looking at your repository can easily
-understand its history.
-
-Don't commit half-done work, for the sake of your collaborators (and your future self!).
-
-Test your application before you commit to ensure functionality at every step in the development process.
-
-We would like you to have well over 200 commits by graduation, so commit early and often!
-
-Submission on BCS You are required to submit the following:
-
-The URL of the GitHub repository
-
-A video demonstrating the entirety of the app's functionality
-
-© 2019 Trilogy Education Services, a 2U, Inc. brand. All Rights Reserved.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
